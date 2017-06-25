@@ -9,7 +9,7 @@
     "url": "https://github.com/dvopalecky/gen-mapper"
   },
   "bugs": {
-     "url": "https://github.com/dvopalecky/gen-mapper/issues"
+    "url": "https://github.com/dvopalecky/gen-mapper/issues"
   },
   "keywords": [
     "generation",
@@ -17,7 +17,8 @@
     "tree"
   ],
   "dependencies": {
-    "d3": "4.2.2"
+    "d3": "4.2.2",
+    "express": "^4.15.3"
   },
   "private": true,
   "license": "MIT",
