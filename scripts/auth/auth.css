@@ -43,6 +43,10 @@ form input {
     font-size: 16px;
 }
 
+form input[type=text], form input[type=password] {
+    border: 1px solid transparent;
+}
+
 input#email {
     margin-bottom: 1px;
     border-bottom-left-radius: 0;
@@ -102,9 +106,14 @@ button:hover {
 form.show-login-button button#login {
     opacity: 1;
 }
+
 form.show-login-button input {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+}
+
+form.invalid-login input {
+    border-color: red;
 }
 
 .separator {

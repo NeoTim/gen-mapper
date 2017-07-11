@@ -17,8 +17,10 @@
     "tree"
   ],
   "dependencies": {
+    "body-parser": "^1.17.2",
     "d3": "4.2.2",
-    "express": "^4.15.3"
+    "express": "^4.15.3",
+    "jsonfile": "^3.0.1"
   },
   "private": true,
   "license": "MIT",

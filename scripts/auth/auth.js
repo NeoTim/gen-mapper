@@ -63,6 +63,10 @@ class UserAuthentication {
         return false
     }
 
+    displayInvalidLogin(validity) {
+        this.form.classList[validity ? 'add' : 'remove']('invalid-login');
+    }
+
     login() {
 
         const data = {
@@ -76,7 +80,12 @@ class UserAuthentication {
             data: data,
             success: (data)=> {
                 console.log(data)
+                this.displayInvalidLogin(false);
+            },
+            error: (err)=> {
+                this.displayInvalidLogin(true);
             }
         })
     }
+    
 }
