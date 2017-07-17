@@ -1,9 +1,10 @@
 {
-    "users": [
-        {
-            "id": 0,
-            "email":"joel.cox.dev@gmail.com",
-            "password": "091190"
-        }
-    ]
+  "userIndex": 2,
+  "users": {
+    "joel.cox.dev@gmail.com": {
+      "id": "0",
+      "email": "joel.cox.dev@gmail.com",
+      "CSV": "id,parentId,name,email,link,attenders,believers,baptized,newlyBaptized,church,churchType,elementBaptism,elementWord,elementPrayer,elementLordsSupper,elementGive,elementLove,elementWorship,elementLeaders,elementMakeDisciples,placeDate,threeThirds,active\n0,,Name,,,0,0,0,0,0,newBelievers,0,0,0,0,0,0,0,0,0,Place & Date,1234567,1\n2,0,Name,,,0,0,0,0,0,newBelievers,0,0,0,0,0,0,0,0,0,Place & Date,1234567,1\n1,0,Name,,,0,0,0,0,0,newBelievers,0,0,0,0,0,0,0,0,0,Place & Date,1234567,1\n4,0,Name,,,0,0,0,0,0,newBelievers,0,0,0,0,0,0,0,0,0,Place & Date,1234567,1\n3,0,Name,,,0,0,0,0,0,newBelievers,0,0,0,0,0,0,0,0,0,Place & Date,1234567,1\n6,3,Name,,,0,0,0,0,0,newBelievers,0,0,0,0,0,0,0,0,0,Place & Date,1234567,1\n5,3,Name,,,0,0,0,0,0,newBelievers,0,0,0,0,0,0,0,0,0,Place & Date,1234567,1\n8,3,Name,,,0,0,0,0,0,newBelievers,0,0,0,0,0,0,0,0,0,Place & Date,1234567,1"
+    }
+  }
 }

@@ -24,7 +24,12 @@ class UserAuthentication {
             event.preventDefault();
 
             if (this.checkValidity()) {
-                this.login();
+
+                if (this.container.classList.contains('is-signup')) {
+                    this.signup();
+                } else {
+                    this.login();
+                }
             }
         }
         
@@ -63,8 +68,18 @@ class UserAuthentication {
         return false
     }
 
-    displayInvalidLogin(validity) {
-        this.form.classList[validity ? 'add' : 'remove']('invalid-login');
+    displayInvalidLogin(message = '') {
+        this.form.email.setCustomValidity(message);
+        this.form.password.setCustomValidity(message);
+        this.displayLoginError(message);
+    }
+
+    displayLoginError(msg) {
+        if (msg) {
+            $('#error').text(msg);
+        } else {
+            $('#error').text('');
+        }
     }
 
     login() {
@@ -75,17 +90,50 @@ class UserAuthentication {
         }
 
         $.ajax({
-            url: 'users/login',
+            url: 'http://localhost:8000/auth/login',
             method: 'POST',
             data: data,
             success: (data)=> {
                 console.log(data)
-                this.displayInvalidLogin(false);
+                this.displayInvalidLogin();
+                window.location = 'genmapper.html'
+                window.localStorage.setItem('genmapper.user', JSON.stringify(data));
+                
             },
             error: (err)=> {
-                this.displayInvalidLogin(true);
+                this.displayInvalidLogin('Invalid email or password!');
             }
         })
     }
     
+    signup() {
+        const data = {
+            email: this.form.email.value,
+            password: this.form.password.value
+        }
+
+        if (data.password !== this.form.password2.value) {
+            return this.displayInvalidLogin('Passwords do not match');
+        }
+        
+        this.displayInvalidLogin();
+
+        $.ajax({
+            url: 'http://localhost:8000/auth/signup',
+            method: 'POST',
+            data: data,
+            success: (response)=> {
+                
+                if (response.error) {
+                    this.displayInvalidLogin(response.error);    
+                } else {
+                    this.displayInvalidLogin();    
+                    this.login();
+                }
+            },
+            error: (err)=> {
+                this.displayInvalidLogin(err);
+            }
+        })
+    }
 }

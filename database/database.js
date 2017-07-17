@@ -24,10 +24,22 @@ class Database {
 
     addUser(userData) {
         return this.read().then(data => {
+
+            if (data.emails[userData.email]) {
+                return Promise.reject({
+                    error: 'User already exists'
+                })
+            }
+
             if (!userData.id) {
                 userData.id = data.users.length;
-                data.users.push(userData);
             }
+
+            data.emails[userData.email] = {
+                id: userData.id
+            }
+
+            data.users.push(userData);
 
             return this.write(data);
         })
