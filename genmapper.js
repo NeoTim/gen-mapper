@@ -14,6 +14,7 @@ const zoom = d3.zoom()
 
 let projectName = 'Untitled project'
 
+
 addFieldsToEditWindow(template)
 
 d3.select('#project-name')
@@ -514,8 +515,8 @@ function parseCsvData (csvData) {
   })
 }
 
-function outputCsv () {
-  const out = d3.csvFormatRows(data.map(function (d, i) {
+function getCSVOut() {
+  return d3.csvFormatRows(data.map(function (d, i) {
     const output = []
     template.fields.forEach(function (field) {
       if (field.type === 'checkbox') {
@@ -527,6 +528,10 @@ function outputCsv () {
     )
     return output
   }))
+}
+
+function outputCsv () {
+  const out = getCSVOut();
   const blob = new Blob([csvHeader + out], {type: 'text/csv;charset=utf-8'})
   const isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
                navigator.userAgent && !navigator.userAgent.match('CriOS')
@@ -578,6 +583,7 @@ function importFile () {
     const filedata = fr.result
     let csvString
 
+
     if (extension === 'xls' || extension === 'xlsx') {
       const workbook = XLSX.read(filedata, {type: 'binary'})
       const worksheet = workbook.Sheets[workbook.SheetNames[0]]
@@ -588,8 +594,10 @@ function importFile () {
       displayAlert('Wrong type of file. Please import xls, xlsx or csv files.')
       return
     }
+
     csvString = csvString.replace(/\r\n?/g, '\n')
     csvString = csvHeader + csvString.substring(csvString.indexOf('\n') + 1) // replace first line with a default one
+
 
     try {
       const tmpData = parseCsvData(csvString)
@@ -641,4 +649,38 @@ function addFieldsToEditWindow (template) {
     }
   }
   )
+}
+
+
+function loadUserdata() {
+  let user = window.localStorage.getItem('genmapper.user');
+  if (!user) return;
+  user = JSON.parse(user);
+
+  window.httpClient.get('users/' + user.id)
+    .then(response => {
+      console.log(response)
+      const csvString = response.blob;
+      const tmpData = parseCsvData(csvString)
+      const treeTest = d3.tree()
+      const stratifiedDataTest = d3.stratify()(tmpData)
+      treeTest(stratifiedDataTest)
+      data = tmpData
+      redraw(template)
+    })
+}
+
+function saveUserdata() {
+  let out = getCSVOut();
+  let userdata = window.localStorage.getItem('genmapper.user');
+  if (userdata) userdata = JSON.parse(userdata);
+  userdata.blob = csvHeader + out;
+  
+  window.httpClient.post('users/' + userdata.id, userdata)
+    .then((response)=> {
+      console.log(response)
+    })
+    .catch((err)=> {
+      console.log(err)
+    })
 }

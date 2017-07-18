@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <title>GenMapper</title>
   <link rel="stylesheet" type="text/css" href="../style.css">
+  <link rel="stylesheet" type="text/css" href="../components/navigation.css">
 </head>
 <body>
 <div id="content">
@@ -16,6 +17,9 @@
     <button onclick='origPosition();'>Original Zoom &amp; Position</button>
     <button onclick='zoomIn();'>Zoom In</button>
     <button onclick='zoomOut();'>Zoom Out</button>
+    <p>Save / load</p>
+    <button onclick="loadUserdata()">Load</button>
+    <button onclick="saveUserdata()">Save</button>
     <p>Import / Export</p>
     <button onclick="onLoad()">Import XLXS / CSV</button>
     <input type="file" id="file-input" onchange="importFile()" style="display:none;">
@@ -107,11 +111,18 @@
   </section>
 </div>
 <script src="../lib/jquery.js"></script>
+<script src="../components/navigation.js"></script>
+<script src="../auth/http.js"></script>
 <script src="template.js"></script>
 <script src="../lib/d3.min.js"></script>
 <script src="../lib/underscore-min.js"></script>
 <script src="../genmapper.js"></script>
 <script src="../lib/FileSaver.min.js"></script>
 <script src="../lib/xlsx.core.min.js"></script>
+
+<script>
+    var aside = document.querySelector('#left-menu');
+    var navigation = new Navigation(aside);
+</script>
 </body>
 </html>
